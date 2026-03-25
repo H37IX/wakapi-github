@@ -32,7 +32,7 @@ def format_duration_compact(seconds: int) -> str:
 def build_profile_bio(total_seconds: int) -> str:
     dur = format_duration_compact(total_seconds)
     month = date.today().strftime("%B")
-    return f"⚡{dur} coding this {month} 🚀"
+    return f"⚡{dur} coding this {month}"
 
 while True:
     res = requests.get(wakapi_api,
