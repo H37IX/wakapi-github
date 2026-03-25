@@ -5,4 +5,7 @@ services:
       GITHUB_API_KEY: ${GITHUB_API_KEY}
       WAKAPI_API_KEY: ${WAKAPI_API_KEY}
       WAKAPI_URL: ${WAKAPI_URL}
-    build: https://github.com/yd4dev/wakapi-github.git
+    build:
+      context: .
+      dockerfile: Dockerfile
+
