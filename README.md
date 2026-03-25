@@ -6,19 +6,21 @@ The bio uses a short duration string plus the current calendar month, for exampl
 
 ## Requirements
 
-- Python 3.12+ **or** Docker
+- Python **or** Docker
 - A **Wakapi** account (self-hosted or [wakapi.dev](https://wakapi.dev)) and API key
-- A **GitHub** [personal access token](https://github.com/settings/tokens) with the **`user`** scope (to update your profile)
+- A **GitHub** [personal access token](https://github.com/settings/tokens) with the `**user`** scope (to update your profile)
 
 ## Environment variables
 
 Create a `.env` file in the project root or export these in your shell:
 
-| Variable | Description |
-|----------|-------------|
-| `WAKAPI_API_KEY` | Wakapi API key (sent as Basic auth) |
-| `GITHUB_API_KEY` | GitHub PAT with `user` scope |
-| `WAKAPI_URL` | Wakapi base URL, e.g. `https://wakapi.dev` — **no trailing slash** |
+
+| Variable         | Description                                                        |
+| ---------------- | ------------------------------------------------------------------ |
+| `WAKAPI_API_KEY` | Wakapi API key (sent as Basic auth)                                |
+| `GITHUB_API_KEY` | GitHub PAT with `user` scope                                       |
+| `WAKAPI_URL`     | Wakapi base URL, e.g. `https://wakapi.dev` — **no trailing slash** |
+
 
 The app uses [python-dotenv](https://pypi.org/project/python-dotenv/) to load `.env` when you run it locally.
 
@@ -28,6 +30,7 @@ The app uses [python-dotenv](https://pypi.org/project/python-dotenv/) to load `.
 python -m venv .venv
 # Windows:
 .\.venv\Scripts\activate
+
 # macOS/Linux:
 # source .venv/bin/activate
 
@@ -51,11 +54,13 @@ More Docker-oriented notes: [README.Docker.md](README.Docker.md).
 
 The `.vscode` folder is **committed on purpose** so you can debug in a container with a consistent setup:
 
-| File | Purpose |
-|------|---------|
-| `launch.json` | **Docker: Python — General** — starts a debug session with **debugpy** inside the container |
-| `tasks.json` | Builds the image (`docker-build`) and runs the debug container (`docker-run: debug`) before launch |
-| `extensions.json` | Suggests the **Docker** extension (`ms-azuretools.vscode-docker`) |
+
+| File              | Purpose                                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| `launch.json`     | **Docker: Python — General** — starts a debug session with **debugpy** inside the container        |
+| `tasks.json`      | Builds the image (`docker-build`) and runs the debug container (`docker-run: debug`) before launch |
+| `extensions.json` | Suggests the **Docker** extension (`ms-azuretools.vscode-docker`)                                  |
+
 
 1. Install [Docker](https://docs.docker.com/get-docker/) and the [Docker VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker).
 2. Open this folder in VS Code.
