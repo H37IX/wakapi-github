@@ -2,7 +2,10 @@
 
 Small Python service that reads your **this-month** coding time from [Wakapi](https://github.com/muety/wakapi) and updates your **GitHub profile bio** on a schedule (every 15 minutes).
 
-The bio uses a short duration string plus the current calendar month, for example: `⚡2h 30m coding this March 🚀` (exact format is defined in `main.py`).
+The bio uses a short duration string plus the current calendar month, for example: `⚡2h 30m coding this March 🚀` (exact format is defined in `main.py`).  
+  
+This is a personal fork of wakapi-github for my own modifications.  
+Not intended for upstream PRs.
 
 ## Requirements
 
