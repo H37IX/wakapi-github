@@ -4,6 +4,10 @@ from datetime import date
 import os
 import base64
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 wakapi_url = os.environ['WAKAPI_URL']
 
 github_api, wakapi_api = 'https://api.github.com/user', wakapi_url + '/api/summary'
@@ -11,14 +15,24 @@ github_api, wakapi_api = 'https://api.github.com/user', wakapi_url + '/api/summa
 wakapi_key = os.environ['WAKAPI_API_KEY']
 github = os.environ['GITHUB_API_KEY']
 
-def format_seconds(seconds):
-    mins = seconds // 60  # Minuten berechnen
-    secs = seconds % 60   # Übrig gebliebene Sekunden berechnen
 
-    if mins > 0:
-        return f"{mins} mins {secs} secs"
-    else:
-        return f"{secs} secs"
+def format_duration_compact(seconds: int) -> str:
+    """Short duration for bio (GitHub bio max 160 chars)."""
+    if seconds <= 0:
+        return "0m"
+    h, rem = divmod(seconds, 3600)
+    m, s = divmod(rem, 60)
+    if h:
+        return f"{h}h {m}m" if m else f"{h}h" #hours and minutes
+    if m:
+        return f"{m}m {s}s" if s else f"{m}m" #minutes and seconds
+    return f"{s}s" #seconds
+
+
+def build_profile_bio(total_seconds: int) -> str:
+    dur = format_duration_compact(total_seconds)
+    month = date.today().strftime("%B")
+    return f"⚡{dur} coding this {month} 🚀"
 
 while True:
     res = requests.get(wakapi_api,
@@ -26,7 +40,7 @@ while True:
         "Authorization": f"Basic {base64.b64encode(wakapi_key.encode('ascii')).decode('ascii')}"
     },
     params={
-        'interval': 'today'
+        'interval': 'month'
     })
 
     if res.status_code == 200:
@@ -34,18 +48,15 @@ while True:
         res = res.json()
 
         time = sum(project['total'] for project in res['projects'])
-
-        time_formatted = format_seconds(time)
+        bio = build_profile_bio(time)
 
         post = requests.patch(github_api, headers={
             'Accept': "application/vnd.github.v3+json",
             'Authorization': f'token {github}'
-        }, json={
-            'bio': f'Today ({date.today()}) coded: {time_formatted}'
-        })
+        }, json={'bio': bio})
 
         if post.status_code == 200:
-            print("<SUCCESS> Bio updated: " + f'Today ({date.today()}) coded: {time_formatted}')
+            print("<SUCCESS> Bio updated: " + bio)
         else:
             print("<FAIL> " + post.content)
 
