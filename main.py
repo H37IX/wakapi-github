@@ -31,8 +31,8 @@ def format_duration_compact(seconds: int) -> str:
 
 def build_profile_bio(total_seconds: int) -> str:
     dur = format_duration_compact(total_seconds)
-    month = date.today().strftime("%B")
-    return f"⚡{dur} coding this {month}"
+    year = date.today().strftime("%Y")
+    return f"⚡{dur} coding in {year}"
 
 while True:
     res = requests.get(wakapi_api,
@@ -40,7 +40,7 @@ while True:
         "Authorization": f"Basic {base64.b64encode(wakapi_key.encode('ascii')).decode('ascii')}"
     },
     params={
-        'interval': 'month'
+        'interval': 'year'
     })
 
     if res.status_code == 200:
