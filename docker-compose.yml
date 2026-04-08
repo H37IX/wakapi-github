@@ -1,6 +1,7 @@
 services:
   wakapi-github:
     image: wakapi-github
+    restart: unless-stopped
     environment:
       GITHUB_API_KEY: ${GITHUB_API_KEY}
       WAKAPI_API_KEY: ${WAKAPI_API_KEY}
